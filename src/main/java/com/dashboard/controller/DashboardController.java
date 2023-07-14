@@ -4,6 +4,7 @@ import com.dashboard.model.Articles;
 import com.dashboard.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/articles")
 public class DashboardController {
 
     @Autowired
@@ -18,11 +20,10 @@ public class DashboardController {
 
     @GetMapping("/data")
     public List<Articles> getAllArticles() {
-        System.out.println("Data point is hit");
         return dashboardService.getAllData();
     }
 
-    @GetMapping("/swot_data")
+    @GetMapping("/swot-data")
     public List<Map<String, Object>> getSwotData(){
         return dashboardService.findSwotData();
     }
@@ -42,7 +43,7 @@ public class DashboardController {
         return dashboardService.findAllLikelihood();
     }
 
-    @GetMapping("country-relevance")
+    @GetMapping("/country-relevance")
     public List<Map<String, Object>> getCountryWithRelevance(){
         return dashboardService.findCountryWithRelevance();
     }
