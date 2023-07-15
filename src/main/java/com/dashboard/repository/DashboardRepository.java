@@ -46,15 +46,15 @@ public interface DashboardRepository extends JpaRepository<Articles, Long> {
 
 
     //Filter queries for Sector
-    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM ARTICLES WHERE CITY = :city AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
+    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM articles WHERE CITY = :city AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
     List<Map<String, Object>> findSectorCountByCity(String city);
-    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM ARTICLES WHERE COUNTRY = :country AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
+    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM articles WHERE COUNTRY = :country AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
     List<Map<String, Object>> findSectorByCountry(String country);
-    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM ARTICLES WHERE start_year = :startYear AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
+    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM articles WHERE start_year = :startYear AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
     List<Map<String, Object>> findSectorByStartDate(Integer startYear);
-    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM ARTICLES WHERE end_year = :endYear AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
+    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM articles WHERE end_year = :endYear AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
     List<Map<String, Object>> findSectorByEndDate(Integer endYear);
-    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM ARTICLES WHERE TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
+    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM articles WHERE TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
     List<Map<String, Object>> findSectorAndCount();
 
     //Filter queries for Topic and Intensity chart
