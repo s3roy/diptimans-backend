@@ -39,11 +39,6 @@ public class DashboardServiceImpl implements DashboardService{
         return dashboardRepository.findAllLikelihood();
     }
 
-    @Override
-    public List<Map<String, Object>> findCountryWithRelevance() {
-        return dashboardRepository.findDistinctCountryWithRelevanceCount();
-    }
-
     public List<String> getAllCities() {
         List<String> cities = dashboardRepository.findAllCities();
         return cities.stream()
@@ -72,29 +67,67 @@ public class DashboardServiceImpl implements DashboardService{
                 .collect(Collectors.toList());
     }
 
-    public Map<String, Integer> getCountBySector(String sortBy, String filterValue) {
-        List<Articles> dataPoints = fetchDataPointsFromDatabase(sortBy, filterValue);
+    public List<Map<String, Object>> getCountBySector(String sortBy, String filterValue) {
+        return fetchDataPointsFromDatabase(sortBy,filterValue);
 
-        return dataPoints.stream()
-                .collect(Collectors.toMap(Articles::getSector, v -> 1, Integer::sum));
+//        List<Articles> dataPoints = fetchDataPointsFromDatabase(sortBy, filterValue);
+//
+//        return dataPoints.stream()
+//                .filter(article -> !article.getSector().isEmpty())
+//                .collect(Collectors.groupingBy(Articles::getSector, Collectors.summingInt(article -> 1)));
     }
 
-    private List<Articles> fetchDataPointsFromDatabase(String sortBy, String filterValue) {
+    public List<Map<String, Object>> getTopicAndIntensityMap(Integer startYear, Integer endYear) {
+        return fetchStartAndEndDateForTopicIntensity(startYear,endYear);
+
+//        List<Articles> articles = fetchStartAndEndDate(startYear, endYear);
+//        return articles.stream()
+//                .filter(article -> !article.getTopic().isEmpty())
+//                .collect(Collectors.toMap(Articles::getTopic, Articles::getIntensity));
+    }
+
+
+    @Override
+    public List<Map<String, Object>> getCountryWithRelevance(Integer startYear, Integer endYear) {
+        return fetchStartAndEndDateForCountryRelevance(startYear,endYear);
+    }
+
+    private List<Map<String, Object>> fetchStartAndEndDateForTopicIntensity(Integer startYear, Integer endYear){
+        if (startYear != null){
+            return dashboardRepository.findTopicIntensityByStartYear(startYear);
+        } else if (endYear != null) {
+            return dashboardRepository.findTopicIntensityByEndYear(endYear);
+        } else {
+            return dashboardRepository.findAllTopicAndIntensity();
+        }
+    }
+
+    private List<Map<String, Object>> fetchStartAndEndDateForCountryRelevance(Integer startYear, Integer endYear){
+        if (startYear != null){
+            return dashboardRepository.findCountryRelevanceByStartYear(startYear);
+        } else if (endYear != null) {
+            return dashboardRepository.findCountryRelevanceByEndYear(endYear);
+        } else {
+            return dashboardRepository.findDistinctCountryWithRelevanceCount();
+        }
+    }
+
+    private List<Map<String, Object>> fetchDataPointsFromDatabase(String sortBy, String filterValue) {
         if (sortBy != null && filterValue != null) {
             switch (sortBy) {
                 case "city":
-                    return dashboardRepository.findAllByCity(filterValue);
+                    return dashboardRepository.findSectorCountByCity(filterValue);
                 case "country":
-                    return dashboardRepository.findAllByCountry(filterValue);
+                    return dashboardRepository.findSectorByCountry(filterValue);
                 case "startYear":
-                    return dashboardRepository.findAllByStartYear(Integer.parseInt(filterValue));
+                    return dashboardRepository.findSectorByStartDate(Integer.parseInt(filterValue));
                 case "endYear":
-                    return dashboardRepository.findAllByEndYear(Integer.parseInt(filterValue));
+                    return dashboardRepository.findSectorByEndDate(Integer.parseInt(filterValue));
                 default:
                     throw new IllegalArgumentException("Invalid sortBy parameter: " + sortBy);
             }
         } else {
-            return dashboardRepository.findAll();
+            return dashboardRepository.findSectorAndCount();
         }
     }
 

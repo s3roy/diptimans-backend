@@ -44,8 +44,11 @@ public class DashboardController {
     }
 
     @GetMapping("/country-relevance")
-    public List<Map<String, Object>> getCountryWithRelevance(){
-        return dashboardService.findCountryWithRelevance();
+    public List<Map<String, Object>> getCountryWithRelevance(
+            @RequestParam(required = false) Integer startYear,
+            @RequestParam(required = false) Integer endYear
+    ){
+        return dashboardService.getCountryWithRelevance(startYear,endYear);
     }
 
     @GetMapping("/cities")
@@ -72,8 +75,16 @@ public class DashboardController {
         return dashboardService.getAllEndYear();
     }
 
+    @GetMapping("/topic-intensity")
+    public List<Map<String, Object>> getTopicIntensity(
+            @RequestParam(required = false) Integer startYear,
+            @RequestParam(required = false) Integer endYear
+    ){
+        return dashboardService.getTopicAndIntensityMap(startYear,endYear);
+    }
+
     @GetMapping("/sectors/count")
-    public Map<String, Integer> countUniqueSectors(
+    public List<Map<String, Object>> countUniqueSectors(
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String filterValue
     ) {

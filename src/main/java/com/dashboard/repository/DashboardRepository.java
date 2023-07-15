@@ -11,8 +11,8 @@ import java.util.Map;
 @Repository
 public interface DashboardRepository extends JpaRepository<Articles, Long> {
 
-    @Query(value = "SELECT start_year, swot, COUNT(swot), topic FROM articles WHERE TRIM(start_year) != '' " +
-            "AND TRIM(swot) != '' AND TRIM(topic) != '' GROUP BY start_year, swot, topic", nativeQuery = true)
+    @Query(value = "SELECT start_year, end_year, swot, COUNT(swot), topic FROM articles WHERE TRIM(start_year) != '' " +
+            "AND TRIM(end_year) != '' AND TRIM(swot) != '' AND TRIM(topic) != '' GROUP BY start_year, swot, topic", nativeQuery = true)
     List<Map<String, Object>> findSwotData();
 
     @Query(value = "SELECT DISTINCT sector FROM articles WHERE TRIM(sector) != ''", nativeQuery = true)
@@ -23,9 +23,6 @@ public interface DashboardRepository extends JpaRepository<Articles, Long> {
 
     @Query(value = "SELECT likelihood FROM articles", nativeQuery = true)
     List<Integer> findAllLikelihood();
-
-    @Query(value = "SELECT DISTINCT country, COUNT(relevance) as relevance_count FROM articles GROUP BY country", nativeQuery = true)
-    List<Map<String, Object>> findDistinctCountryWithRelevanceCount();
 
     @Query("SELECT DISTINCT d.city FROM Articles d")
     List<String> findAllCities();
@@ -39,12 +36,42 @@ public interface DashboardRepository extends JpaRepository<Articles, Long> {
     @Query("SELECT DISTINCT d.endYear FROM Articles d")
     List<Integer> findAllEndYear();
 
-    List<Articles> findAllByStartYear(int parseInt);
+//    List<Articles> findAllByStartYear(int parseInt);
+//
+//    List<Articles> findAllByEndYear(int parseInt);
+//
+//    List<Articles> findAllByCountry(String filterValue);
+//
+//    List<Articles> findAllByCity(String filterValue);
 
-    List<Articles> findAllByEndYear(int parseInt);
 
-    List<Articles> findAllByCountry(String filterValue);
+    //Filter queries for Sector
+    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM ARTICLES WHERE CITY = :city AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
+    List<Map<String, Object>> findSectorCountByCity(String city);
+    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM ARTICLES WHERE COUNTRY = :country AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
+    List<Map<String, Object>> findSectorByCountry(String country);
+    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM ARTICLES WHERE start_year = :startYear AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
+    List<Map<String, Object>> findSectorByStartDate(Integer startYear);
+    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM ARTICLES WHERE end_year = :endYear AND TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
+    List<Map<String, Object>> findSectorByEndDate(Integer endYear);
+    @Query(value = "SELECT sector, COUNT(SECTOR) as sector_count FROM ARTICLES WHERE TRIM(SECTOR) != '' GROUP BY SECTOR", nativeQuery = true)
+    List<Map<String, Object>> findSectorAndCount();
 
-    List<Articles> findAllByCity(String filterValue);
+    //Filter queries for Topic and Intensity chart
+    @Query(value = "SELECT topic, intensity FROM articles WHERE start_year = :startYear AND topic IS NOT NULL AND TRIM(topic) != '' GROUP BY topic", nativeQuery = true)
+    List<Map<String, Object>> findTopicIntensityByStartYear(int startYear);
+    @Query(value = "SELECT topic, intensity FROM articles WHERE end_year = :endYear AND topic IS NOT NULL AND TRIM(topic) != '' GROUP BY topic", nativeQuery = true)
+    List<Map<String, Object>>  findTopicIntensityByEndYear(int endYear);
+    @Query(value = "SELECT topic, intensity FROM articles WHERE topic IS NOT NULL AND TRIM(topic) != '' GROUP BY topic", nativeQuery = true)
+    List<Map<String, Object>> findAllTopicAndIntensity();
+
+
+    //Filter queries for Country and Relevance chart
+    @Query(value = "SELECT DISTINCT country, COUNT(relevance) as relevance_count FROM articles WHERE TRIM(country) != '' GROUP BY country", nativeQuery = true)
+    List<Map<String, Object>> findDistinctCountryWithRelevanceCount();
+    @Query(value = "SELECT country, COUNT(relevance) as relevance_count FROM articles WHERE start_year = :startYear AND country IS NOT NULL AND TRIM(country) != '' GROUP BY country", nativeQuery = true)
+    List<Map<String, Object>> findCountryRelevanceByStartYear(Integer startYear);
+    @Query(value = "SELECT country, COUNT(relevance) as relevance_count FROM articles WHERE end_year = :endYear AND country IS NOT NULL AND TRIM(country) != '' GROUP BY country", nativeQuery = true)
+    List<Map<String, Object>> findCountryRelevanceByEndYear(Integer endYear);
 
 }

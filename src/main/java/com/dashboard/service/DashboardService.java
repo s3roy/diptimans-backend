@@ -11,10 +11,11 @@ public interface DashboardService {
     List<String> findSectors();
     List<String> findAllRegion();
     List<Integer> findAllLikelihood();
-    List<Map<String, Object>> findCountryWithRelevance();
+    List<Map<String, Object>> getCountryWithRelevance(Integer startYear, Integer endYear);
     List<String> getAllCities();
     List<String> getAllCountries();
     List<Integer> getAllStartYear();
     List<Integer> getAllEndYear();
-    Map<String, Integer> getCountBySector(String sortBy, String filterValue);
+    List<Map<String, Object>> getCountBySector(String sortBy, String filterValue);
+    public List<Map<String, Object>> getTopicAndIntensityMap(Integer startYear, Integer endYear);
 }

@@ -29,8 +29,8 @@ public class Articles {
     @Column(name = "citylat")
     private String cityLat;
 
-    @Column(name = "Integerensity")
-    private Integer Integerensity;
+    @Column(name = "intensity")
+    private Integer Intensity;
 
     @Column(name = "sector")
     private String sector;
