@@ -18,4 +18,7 @@ public interface DashboardService {
     List<Integer> getAllEndYear();
     List<Map<String, Object>> getCountBySector(String sortBy, String filterValue);
     public List<Map<String, Object>> getTopicAndIntensityMap(Integer startYear, Integer endYear);
+    public List<Object[]> getCountryWithHighestSector();
+    public List<Object[]> getCountryWithLowestSector();
+
 }

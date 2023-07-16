@@ -74,4 +74,12 @@ public interface DashboardRepository extends JpaRepository<Articles, Long> {
     @Query(value = "SELECT country, COUNT(relevance) as relevance_count FROM articles WHERE end_year = :endYear AND country IS NOT NULL AND TRIM(country) != '' GROUP BY country", nativeQuery = true)
     List<Map<String, Object>> findCountryRelevanceByEndYear(Integer endYear);
 
+    @Query(value = "SELECT country,  COUNT(*) as sector_count, SUM(intensity) as intensity, SUM(relevance) as relevance FROM articles  " +
+            "WHERE country IS NOT NULL AND country <> '' GROUP BY country, sector ORDER BY sector_count ASC LIMIT 1;", nativeQuery = true)
+    List<Object[]> findCountryWithLowestSector();
+
+    @Query(value = "SELECT country,  COUNT(*) as sector_count, SUM(intensity) as intensity, SUM(relevance) as relevance FROM articles  " +
+            "WHERE country IS NOT NULL AND country <> '' GROUP BY country, sector ORDER BY sector_count DESC LIMIT 1;", nativeQuery = true)
+    List<Object[]> findCountryWithHighestSector();
+
 }

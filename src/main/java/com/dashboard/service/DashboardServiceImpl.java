@@ -67,6 +67,16 @@ public class DashboardServiceImpl implements DashboardService{
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Object[]> getCountryWithHighestSector() {
+        return dashboardRepository.findCountryWithHighestSector();
+    }
+
+    @Override
+    public List<Object[]> getCountryWithLowestSector() {
+        return dashboardRepository.findCountryWithLowestSector();
+    }
+
     public List<Map<String, Object>> getCountBySector(String sortBy, String filterValue) {
         return fetchDataPointsFromDatabase(sortBy,filterValue);
     }

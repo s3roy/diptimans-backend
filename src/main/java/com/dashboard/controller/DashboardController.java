@@ -90,4 +90,14 @@ public class DashboardController {
     ) {
         return dashboardService.getCountBySector(sortBy, filterValue);
     }
+
+    @GetMapping("/country/highest-sector")
+    public List<Object[]> countryHighestSector(){
+        return dashboardService.getCountryWithHighestSector();
+    }
+
+    @GetMapping("/country/lowest-sector")
+    public List<Object[]> countryLowestSector(){
+        return dashboardService.getCountryWithLowestSector();
+    }
 }
