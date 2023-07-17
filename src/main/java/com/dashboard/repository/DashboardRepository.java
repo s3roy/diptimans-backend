@@ -58,11 +58,11 @@ public interface DashboardRepository extends JpaRepository<Articles, Long> {
     List<Map<String, Object>> findSectorAndCount();
 
     //Filter queries for Topic and Intensity chart
-    @Query(value = "SELECT topic, intensity FROM articles WHERE start_year = :startYear AND topic IS NOT NULL AND TRIM(topic) != '' GROUP BY topic", nativeQuery = true)
+    @Query(value = "SELECT topic, intensity FROM articles WHERE start_year = :startYear AND TRIM(topic) !='' group by topic", nativeQuery = true)
     List<Map<String, Object>> findTopicIntensityByStartYear(int startYear);
-    @Query(value = "SELECT topic, intensity FROM articles WHERE end_year = :endYear AND topic IS NOT NULL AND TRIM(topic) != '' GROUP BY topic", nativeQuery = true)
+    @Query(value = "SELECT topic, intensity FROM articles WHERE end_year = :endYear AND TRIM(topic) !='' group by topic", nativeQuery = true)
     List<Map<String, Object>>  findTopicIntensityByEndYear(int endYear);
-    @Query(value = "SELECT topic, intensity FROM articles WHERE topic IS NOT NULL AND TRIM(topic) != '' GROUP BY topic", nativeQuery = true)
+    @Query(value = "SELECT topic, intensity FROM articles WHERE TRIM(topic) !='' group by topic", nativeQuery = true)
     List<Map<String, Object>> findAllTopicAndIntensity();
 
 
