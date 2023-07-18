@@ -55,16 +55,10 @@ public class DashboardServiceImpl implements DashboardService{
 
     public List<Integer> getAllStartYear() {
         return dashboardRepository.findAllStartYear();
-//        return startYears.stream()
-//                .filter(Objects::nonNull)
-//                .collect(Collectors.toList());
     }
 
     public List<Integer> getAllEndYear() {
         return dashboardRepository.findAllEndYear();
-//        return endYears.stream()
-//                .filter(Objects::nonNull)
-//                .collect(Collectors.toList());
     }
 
     @Override
