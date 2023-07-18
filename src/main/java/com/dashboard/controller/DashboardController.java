@@ -53,25 +53,21 @@ public class DashboardController {
 
     @GetMapping("/cities")
     public List<String> getAllCities() {
-        System.out.println("List of cities endpoint is hit");
         return dashboardService.getAllCities();
     }
 
     @GetMapping("/countries")
     public List<String> getAllCountries() {
-        System.out.println("List of countries endpoint is hit");
         return dashboardService.getAllCountries();
     }
 
     @GetMapping("/start-years")
     public List<Integer> getAllStartYear() {
-        System.out.println("List of startdate endpoint is hit");
         return dashboardService.getAllStartYear();
     }
 
     @GetMapping("/end-years")
     public List<Integer> getAllEndYear() {
-        System.out.println("List of enddate endpoint is hit");
         return dashboardService.getAllEndYear();
     }
 

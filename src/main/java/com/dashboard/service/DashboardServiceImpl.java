@@ -54,17 +54,17 @@ public class DashboardServiceImpl implements DashboardService{
     }
 
     public List<Integer> getAllStartYear() {
-        List<Integer> startYears = dashboardRepository.findAllStartYear();
-        return startYears.stream()
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        return dashboardRepository.findAllStartYear();
+//        return startYears.stream()
+//                .filter(Objects::nonNull)
+//                .collect(Collectors.toList());
     }
 
     public List<Integer> getAllEndYear() {
-        List<Integer> endYears = dashboardRepository.findAllEndYear();
-        return endYears.stream()
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        return dashboardRepository.findAllEndYear();
+//        return endYears.stream()
+//                .filter(Objects::nonNull)
+//                .collect(Collectors.toList());
     }
 
     @Override
