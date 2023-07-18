@@ -30,10 +30,10 @@ public interface DashboardRepository extends JpaRepository<Articles, Long> {
     @Query("SELECT DISTINCT d.country FROM Articles d")
     List<String> findAllCountries();
 
-    @Query(value = "SELECT DISTINCT start_year FROM Articles WHERE TRIM(start_year) !='' ORDER BY start_year ASC", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT start_year FROM articles WHERE TRIM(start_year) !='' ORDER BY start_year ASC", nativeQuery = true)
     List<Integer> findAllStartYear();
 
-    @Query(value = "SELECT DISTINCT end_year FROM Articles WHERE TRIM(start_year) !='' ORDER BY end_year ASC", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT end_year FROM articles WHERE TRIM(start_year) !='' ORDER BY end_year ASC", nativeQuery = true)
     List<Integer> findAllEndYear();
 
 //    List<Articles> findAllByStartYear(int parseInt);
